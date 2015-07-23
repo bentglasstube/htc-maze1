@@ -1,6 +1,7 @@
 #include "maze.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "nodeset.h"
 
@@ -42,11 +43,14 @@ void maze_read(maze *maze, FILE *stream) {
 
       maze->capacity = 4 * maze->width;
       maze->nodes = (node **)realloc(maze->nodes, sizeof(node *) * maze->capacity);
+      memset(maze->nodes, 0, maze->capacity * sizeof(node *));
     } else {
       // reallocate more nodes if needed
       if (maze->capacity == maze->height * maze->width) {
-        maze->capacity += 4 * maze->width;
-        maze->nodes = (node **)realloc(maze->nodes, sizeof(node *) * maze->capacity);
+        size_t new_cap = maze->capacity + 4 * maze->width;
+        maze->nodes = (node **)realloc(maze->nodes, sizeof(node *) * new_cap);
+        memset(maze->nodes + maze->capacity, 0, (new_cap - maze->capacity) * sizeof(node *));
+        maze->capacity = new_cap;
       }
 
       maze->height++;
@@ -77,6 +81,8 @@ void maze_read(maze *maze, FILE *stream) {
         maze->nodes[j]->fscore = 0;
       }
     }
+
+    free(line);
   }
 }
 
@@ -185,7 +191,6 @@ void maze_print_path(maze *maze) {
     if (current->y > next->y) dir = 'N';
 
     printf("%c\n", dir);
-    fprintf(stderr, "DEBUG %c\n", dir);
 
     current = next;
   }
