@@ -177,7 +177,7 @@ void maze_print_path(maze *maze) {
 
   while (!nodes_equal(current, goal)) {
     node *next= current->parent;
-    char dir;
+    char dir = ' ';
 
     if (current->x < next->x) dir = 'E';
     if (current->x > next->x) dir = 'W';
@@ -185,6 +185,7 @@ void maze_print_path(maze *maze) {
     if (current->y > next->y) dir = 'N';
 
     printf("%c\n", dir);
+    fprintf(stderr, "DEBUG %c\n", dir);
 
     current = next;
   }
