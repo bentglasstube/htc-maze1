@@ -10,5 +10,7 @@ int main() {
   maze_read(&maze, stdin);
   maze_astar(&maze);
   maze_print_path(&maze);
+
+  maze_print_scores(&maze);
   maze_free(&maze);
 }
