@@ -127,7 +127,7 @@ void maze_astar(maze *maze) {
     uint32_t best = current->fscore;
 
     for (i = 1; i < open.size; ++i) {
-      if (open.nodes[i]->fscore < best) {
+      if (open.nodes[i]->fscore <= best) {
         current = open.nodes[i];
         best = current->fscore;
       }
