@@ -13,8 +13,8 @@ void maze_init(maze *maze) {
 }
 
 node* maze_node_at(maze *maze, uint32_t x, uint32_t y) {
-  if (x < 0 || x > maze->width) return NULL;
-  if (y < 0 || y > maze->height) return NULL;
+  if (x < 0 || x >= maze->width) return NULL;
+  if (y < 0 || y >= maze->height) return NULL;
   return maze->nodes[y * maze->width + x];
 }
 
