@@ -1,6 +1,15 @@
+SRC=$(wildcard *.c)
+OBJ=$(patsubst %.c,%.o,$(SRC))
+
 all: run
 
-run: main.c
-	$(CC) -O3 $< -o $@
+run: $(OBJ)
+	$(CC) -o $@ $^
 
-.PHONY: all
+%.o: %.c
+	$(CC) -c -O3 -o $@ $<
+
+clean:
+	rm *.o run
+
+.PHONY: all clean
