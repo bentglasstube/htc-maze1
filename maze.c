@@ -185,7 +185,6 @@ void maze_print_path(maze *maze) {
     if (current->y > next->y) dir = 'N';
 
     printf("%c\n", dir);
-    fprintf(stderr, "%c\n", dir);
 
     current = next;
   }
