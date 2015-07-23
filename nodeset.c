@@ -8,12 +8,12 @@ void nodeset_init(nodeset *set, size_t capacity) {
   set->nodes = (nodep *)malloc(set->capacity * sizeof(nodep));
 }
 
-uint8_t nodeset_contains(nodeset *set, node *node) {
+bool nodeset_contains(nodeset *set, node *node) {
   size_t i;
   for (i = 0; i < set->size; ++i) {
-    if (nodes_equal(set->nodes[i], node)) return 1;
+    if (nodes_equal(set->nodes[i], node)) return true;
   }
-  return 0;
+  return false;
 }
 
 void nodeset_add(nodeset *set, node *node) {

@@ -1,11 +1,12 @@
 #pragma once
 
+#include <stdbool.h>
 #include <stdint.h>
 
 typedef struct node {
-  uint32_t x, y;
-  uint32_t gscore, fscore;
+  int x, y;
+  int gscore, fscore;
   struct node *parent;
 } node, *nodep;
 
-uint8_t nodes_equal (node *a, node *b);
+bool nodes_equal (node *a, node *b);
