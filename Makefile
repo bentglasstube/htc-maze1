@@ -1,4 +1,6 @@
-all:
-	$(CC) -O3 main.c -o run
+all: run
+
+run: main.c
+	$(CC) -O3 $< -o $@
 
 .PHONY: all
