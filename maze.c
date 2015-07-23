@@ -45,11 +45,21 @@ void maze_read(maze *maze, FILE *stream) {
 
       maze->capacity = 4 * maze->width;
       maze->nodes = (node **)realloc(maze->nodes, sizeof(node *) * maze->capacity);
+
+      if (maze->nodes == NULL) {
+        fprintf(stderr, "Could not allocate space for maze row %u", maze->height);
+        exit(1);
+      }
     } else {
       // reallocate more nodes if needed
       if (maze->capacity == maze->height * maze->width) {
         maze->capacity += 4 * maze->width;
         maze->nodes = (node **)realloc(maze->nodes, sizeof(node *) * maze->capacity);
+
+        if (maze->nodes == NULL) {
+          fprintf(stderr, "Could not allocate space for maze row %u", maze->height + 1);
+          exit(1);
+        }
       }
 
       maze->height++;
