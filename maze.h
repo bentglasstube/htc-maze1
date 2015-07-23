@@ -42,7 +42,8 @@ void maze_read(maze *maze, FILE *stream) {
 
     fprintf(stderr, "%s", line);
 
-    read--;
+    // truncate line endings
+    while (line[read - 1] == '\n' || line[read - 1] == '\r') read--;
 
     if (maze->height == 0) {
       // initially allocate maze width and height
