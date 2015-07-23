@@ -28,8 +28,6 @@ node* maze_node_at(maze *maze, uint32_t x, uint32_t y) {
 }
 
 void maze_read(maze *maze, FILE *stream) {
-  uint32_t height, width;
-
   for (;;) {
     char *line;
     size_t len, i;
@@ -119,7 +117,7 @@ void maze_astar(maze *maze) {
   nodeset closed, open, neighbors;
   node *start, *goal;
 
-  nodeset_init(&closed, maze->height * maze->width / 2);
+  nodeset_init(&closed, 16);
   nodeset_init(&open, 16);
 
   start = maze_start(maze);
@@ -137,7 +135,7 @@ void maze_astar(maze *maze) {
     node *current = open.nodes[0];
     uint32_t best = current->fscore;
 
-    for (i = 1; i < open.size; i++) {
+    for (i = 1; i < open.size; ++i) {
       if (open.nodes[i]->fscore < best) {
         current = open.nodes[i];
         best = current->fscore;
