@@ -12,4 +12,7 @@ run: $(OBJ)
 clean:
 	rm *.o run
 
-.PHONY: all clean
+test: run
+	t/runtests
+
+.PHONY: all clean test
