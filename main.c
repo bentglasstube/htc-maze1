@@ -11,4 +11,6 @@ int main() {
   maze_astar(&maze);
   maze_print_path(&maze);
   maze_free(&maze);
+
+  return 0;
 }
