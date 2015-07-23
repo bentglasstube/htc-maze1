@@ -33,6 +33,8 @@ void maze_read(maze *maze, FILE *stream) {
     // truncate line endings
     while (line[read - 1] == '\n' || line[read - 1] == '\r') read--;
 
+    fprintf(stderr, "M %s\n", line);
+
     if (maze->height == 0) {
       // initially allocate maze width and height
       maze->width = read;
@@ -133,6 +135,8 @@ void maze_astar(maze *maze) {
       }
     }
 
+    fprintf(stderr, "> %u,%u %u\n", current->x, current->y, current->fscore);
+
     if (nodes_equal(current, goal)) {
       nodeset_clear(&open);
       break;
@@ -154,6 +158,8 @@ void maze_astar(maze *maze) {
         neighbor->gscore = gscore;
         neighbor->fscore = gscore + maze_heuristic(maze, neighbor);
         nodeset_add(&open, neighbor);
+
+        fprintf(stderr, "+ %u,%u %u\n", neighbor->x, neighbor->y, neighbor->fscore);
       }
     }
   }
