@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "node.h"
+#include "nodeset.h"
 
 typedef struct maze {
   uint32_t height, width, capacity;
