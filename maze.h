@@ -40,6 +40,8 @@ void maze_read(maze *maze, FILE *stream) {
       break;
     }
 
+    fprintf(stderr, "%s", line);
+
     read--;
 
     if (maze->height == 0) {
