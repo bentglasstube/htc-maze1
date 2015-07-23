@@ -40,8 +40,6 @@ void maze_read(maze *maze, FILE *stream) {
       break;
     }
 
-    fprintf(stdout, "%s", line);
-
     // truncate line endings
     while (line[read - 1] == '\n' || line[read - 1] == '\r') read--;
 
