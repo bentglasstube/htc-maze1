@@ -22,8 +22,8 @@ void maze_read(maze *maze, FILE *stream) {
   fprintf(stderr, "Reading maze\n");
 
   for (;;) {
-    char *line;
-    size_t len, i;
+    char *line = NULL;
+    size_t len = 0, i;
     ssize_t read = getline(&line, &len, stream);
     uint32_t y;
 
