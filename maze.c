@@ -109,7 +109,7 @@ void maze_neighbors(maze *maze, int x, int y, nodeset* output) {
 }
 
 int maze_heuristic(maze *maze, node *node) {
-  return abs(node->x - maze->sx) + abs(node->y - maze->sy);
+  return abs(node->x - maze->gx) + abs(node->y - maze->gy);
 }
 
 void maze_astar(maze *maze) {
@@ -122,10 +122,10 @@ void maze_astar(maze *maze) {
   start = maze_start(maze);
   goal = maze_goal(maze);
 
-  nodeset_add(&open, goal);
+  nodeset_add(&open, start);
 
-  goal->gscore = 0;
-  goal->fscore = maze_heuristic(maze, goal);
+  start->gscore = 0;
+  start->fscore = maze_heuristic(maze, start);
 
   nodeset_init(&neighbors, 4);
 
@@ -143,7 +143,7 @@ void maze_astar(maze *maze) {
 
     // fprintf(stderr, "> %u,%u %u\n", current->x, current->y, current->fscore);
 
-    if (nodes_equal(current, start)) {
+    if (nodes_equal(current, goal)) {
       nodeset_clear(&open);
       break;
     }
@@ -176,24 +176,48 @@ void maze_astar(maze *maze) {
 }
 
 void maze_print_path(maze *maze) {
-  node *current, *goal;
+  size_t i, length, capacity;
+  char *path;
+  node *current, *start;
 
-  current = maze_start(maze);
-  goal = maze_goal(maze);
+  current = maze_goal(maze);
+  start = maze_start(maze);
 
-  while (!nodes_equal(current, goal)) {
-    node *next= current->parent;
+  length = 0;
+  capacity = 16;
+  path = (char *)malloc(capacity * sizeof(char));
+
+  while (!nodes_equal(current, start)) {
+    node *previous = current->parent;
     char dir = ' ';
 
-    if (current->x < next->x) dir = 'E';
-    if (current->x > next->x) dir = 'W';
-    if (current->y < next->y) dir = 'S';
-    if (current->y > next->y) dir = 'N';
+    if (previous == NULL) {
+      fprintf(stderr, "No more parents\n");
+      break;
+    }
 
-    printf("%c\n", dir);
+    if (current->x < previous->x) dir = 'W';
+    if (current->x > previous->x) dir = 'E';
+    if (current->y < previous->y) dir = 'N';
+    if (current->y > previous->y) dir = 'S';
 
-    current = next;
+    if (length == capacity) {
+      capacity *= 2;
+      path = realloc(path, capacity * sizeof(char));
+    }
+
+    path[length] = dir;
+    length++;
+
+    current = previous;
   }
+
+  for (i = length; i > 0; --i) {
+    printf("%c\n", path[i - 1]);
+    fprintf(stderr, "%c\n", path[i - 1]);
+  }
+
+  free(path);
 }
 
 void maze_print_scores(maze *maze) {
