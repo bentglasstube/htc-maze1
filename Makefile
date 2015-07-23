@@ -1,7 +1,7 @@
 SRC=$(wildcard *.c)
 OBJ=$(patsubst %.c,%.o,$(SRC))
 
-all: test
+all: run
 
 run: $(OBJ)
 	$(CC) -o $@ $^

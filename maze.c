@@ -19,8 +19,6 @@ node* maze_node_at(maze *maze, uint32_t x, uint32_t y) {
 }
 
 void maze_read(maze *maze, FILE *stream) {
-  fprintf(stderr, "Reading maze\n");
-
   for (;;) {
     char *line = NULL;
     size_t len = 0, i;
@@ -29,11 +27,8 @@ void maze_read(maze *maze, FILE *stream) {
 
     if (read == -1) {
       free(line);
-      fprintf(stderr, "Done reading maze\n");
       break;
     }
-
-    fprintf(stderr, "Got line: %s", line);
 
     // truncate line endings
     while (line[read - 1] == '\n' || line[read - 1] == '\r') read--;
@@ -45,21 +40,11 @@ void maze_read(maze *maze, FILE *stream) {
 
       maze->capacity = 4 * maze->width;
       maze->nodes = (node **)realloc(maze->nodes, sizeof(node *) * maze->capacity);
-
-      if (maze->nodes == NULL) {
-        fprintf(stderr, "Could not allocate space for maze row %u", maze->height);
-        exit(1);
-      }
     } else {
       // reallocate more nodes if needed
       if (maze->capacity == maze->height * maze->width) {
         maze->capacity += 4 * maze->width;
         maze->nodes = (node **)realloc(maze->nodes, sizeof(node *) * maze->capacity);
-
-        if (maze->nodes == NULL) {
-          fprintf(stderr, "Could not allocate space for maze row %u", maze->height + 1);
-          exit(1);
-        }
       }
 
       maze->height++;
@@ -88,8 +73,6 @@ void maze_read(maze *maze, FILE *stream) {
         maze->nodes[j]->parent = NULL;
         maze->nodes[j]->gscore = 0;
         maze->nodes[j]->fscore = 0;
-
-        fprintf(stderr, "Adding node at %u,%u\n", maze->nodes[j]->x, maze->nodes[j]->y);
       }
     }
   }
@@ -138,8 +121,6 @@ void maze_astar(maze *maze) {
 
   nodeset_init(&neighbors, 4);
 
-  fprintf(stderr, "Beginning A*\n");
-
   while (open.size > 0) {
     size_t i;
     node *current = open.nodes[0];
@@ -151,8 +132,6 @@ void maze_astar(maze *maze) {
         best = current->fscore;
       }
     }
-
-    fprintf(stderr, "Trying candidate %u,%u (%u)\n", current->x, current->y, current->fscore);
 
     if (nodes_equal(current, goal)) {
       nodeset_clear(&open);
