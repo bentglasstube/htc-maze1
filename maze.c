@@ -214,7 +214,6 @@ void maze_print_path(maze *maze) {
 
   for (i = length; i > 0; --i) {
     printf("%c\n", path[i - 1]);
-    fprintf(stderr, "%c\n", path[i - 1]);
   }
 
   free(path);
