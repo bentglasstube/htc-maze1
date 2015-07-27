@@ -13,7 +13,7 @@ void maze_init(maze *maze) {
   maze->nodes = NULL;
 }
 
-node* maze_node_at(maze *maze, int x, int y) {
+node* maze_node_at(maze *maze, int64_t x, int64_t y) {
   if (x < 0 || x >= maze->width) return NULL;
   if (y < 0 || y >= maze->height) return NULL;
   return maze->nodes[y * maze->width + x];
@@ -94,12 +94,12 @@ node* maze_goal(maze *maze) {
   return maze_node_at(maze, maze->gx, maze->gy);
 }
 
-void _check_and_add_node(maze *maze, nodeset *set, int x, int y) {
+void _check_and_add_node(maze *maze, nodeset *set, int64_t x, int64_t y) {
   node *node = maze_node_at(maze, x, y);
   if (node != NULL) nodeset_add(set, node);
 }
 
-void maze_neighbors(maze *maze, int x, int y, nodeset* output) {
+void maze_neighbors(maze *maze, int64_t x, int64_t y, nodeset* output) {
   nodeset_clear(output);
 
   _check_and_add_node(maze, output, x - 1, y);

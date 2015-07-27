@@ -7,7 +7,7 @@
 
 typedef struct maze {
   uint64_t height, width, capacity;
-  int sx, sy, gx, gy;
+  int64_t sx, sy, gx, gy;
   node **nodes;
 } maze;
 

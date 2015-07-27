@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 typedef struct node {
-  int x, y;
+  int64_t x, y;
   uint64_t gscore, fscore;
   struct node *parent;
 } node, *nodep;
