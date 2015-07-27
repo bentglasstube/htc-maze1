@@ -13,7 +13,7 @@ void maze_init(maze *maze) {
   maze->nodes = NULL;
 }
 
-node* maze_node_at(maze *maze, int32_t x, int32_t y) {
+inline node* maze_node_at(maze *maze, int32_t x, int32_t y) {
   if (x < 0 || x >= maze->width) return NULL;
   if (y < 0 || y >= maze->height) return NULL;
   return maze->nodes[y * maze->width + x];
@@ -86,15 +86,15 @@ void maze_read(maze *maze, FILE *stream) {
   }
 }
 
-node* maze_start(maze *maze) {
+inline node* maze_start(maze *maze) {
   return maze_node_at(maze, maze->sx, maze->sy);
 }
 
-node* maze_goal(maze *maze) {
+inline node* maze_goal(maze *maze) {
   return maze_node_at(maze, maze->gx, maze->gy);
 }
 
-void _check_and_add_node(maze *maze, nodeset *set, int32_t x, int32_t y) {
+inline void _check_and_add_node(maze *maze, nodeset *set, int32_t x, int32_t y) {
   node *node = maze_node_at(maze, x, y);
   if (node != NULL) nodeset_add(set, node);
 }
@@ -108,7 +108,7 @@ void maze_neighbors(maze *maze, int32_t x, int32_t y, nodeset* output) {
   _check_and_add_node(maze, output, x, y + 1);
 }
 
-uint32_t maze_heuristic(maze *maze, node *node) {
+inline uint32_t maze_heuristic(maze *maze, node *node) {
   return abs(node->x - maze->sx) + abs(node->y - maze->sy);
 }
 
