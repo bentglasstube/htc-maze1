@@ -5,7 +5,7 @@
 
 typedef struct node {
   int x, y;
-  int gscore, fscore;
+  uint16_t gscore, fscore;
   struct node *parent;
 } node, *nodep;
 

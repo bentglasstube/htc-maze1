@@ -6,7 +6,7 @@
 #include "node.h"
 
 typedef struct maze {
-  int height, width, capacity;
+  uint16_t height, width, capacity;
   int sx, sy, gx, gy;
   node **nodes;
 } maze;

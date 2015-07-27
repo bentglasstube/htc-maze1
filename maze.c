@@ -24,7 +24,7 @@ void maze_read(maze *maze, FILE *stream) {
     char *line = NULL;
     size_t len = 0, i;
     ssize_t read = getline(&line, &len, stream);
-    int y;
+    uint16_t y;
 
     if (read == -1) {
       free(line);
@@ -108,7 +108,7 @@ void maze_neighbors(maze *maze, int x, int y, nodeset* output) {
   _check_and_add_node(maze, output, x, y + 1);
 }
 
-int maze_heuristic(maze *maze, node *node) {
+uint16_t maze_heuristic(maze *maze, node *node) {
   return abs(node->x - maze->gx) + abs(node->y - maze->gy);
 }
 
@@ -132,7 +132,7 @@ void maze_astar(maze *maze) {
   while (open.size > 0) {
     size_t i;
     node *current = open.nodes[0];
-    int best = current->fscore;
+    uint16_t best = current->fscore;
 
     for (i = 1; i < open.size; ++i) {
       if (open.nodes[i]->fscore <= best) {
@@ -155,7 +155,7 @@ void maze_astar(maze *maze) {
 
     for (i = 0; i < neighbors.size; ++i) {
       node *neighbor = neighbors.nodes[i];
-      int gscore = current->gscore + 1;
+      uint16_t gscore = current->gscore + 1;
 
       if (nodeset_contains(&closed, neighbor)) continue;
 
