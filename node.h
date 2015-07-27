@@ -4,8 +4,8 @@
 #include <stdint.h>
 
 typedef struct node {
-  int64_t x, y;
-  uint64_t gscore, fscore;
+  int32_t x, y;
+  uint32_t gscore, fscore;
   struct node *parent;
 } node, *nodep;
 
