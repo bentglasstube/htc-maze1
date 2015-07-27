@@ -196,19 +196,6 @@ void maze_print_path(maze *maze) {
   }
 }
 
-void maze_print_scores(maze *maze) {
-  size_t i, j;
-
-  for (i = 0; i < maze->height; ++i) {
-    for (j = 0; j < maze->width; ++j) {
-      node *node = maze_node_at(maze, j, i);
-      if (node) fprintf(stderr, "%3u ", node->fscore);
-      else fprintf(stderr, "--- ");
-    }
-    fprintf(stderr, "\n");
-  }
-}
-
 void maze_free(maze *maze) {
   size_t i;
 
