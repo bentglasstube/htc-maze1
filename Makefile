@@ -10,7 +10,7 @@ run: $(OBJ)
 	$(CC) -Wall -c -O3 -o $@ $<
 
 clean:
-	rm *.o run
+	rm -f *.o run
 
 test: run
 	t/runtests
